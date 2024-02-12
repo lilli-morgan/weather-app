@@ -8,7 +8,7 @@ function App() {
 
   const API_KEY = "4df4b82b5d4ff0d82caae1a4891f9ce1";
 
-  const fetchWeatherData = async () => {
+  const fetchWeatherData = async (e) => {
     try {
       const response = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&units=metric`
@@ -20,17 +20,27 @@ function App() {
     }
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetchWeatherData();
+  };
   return (
     <div className="App">
-      <input
-        className="search-bar"
-        type="text"
-        placeholder="Enter a location"
-        onChange={(event) => setLocation(event.target.value)}
-      ></input>
-      <button type="submit" onClick={fetchWeatherData}>
-        Get Weather
-      </button>
+      <div>
+      <form onSubmit={handleSubmit} className="input">
+        <input
+          className="search-bar"
+          type="text"
+          placeholder="Enter a location"
+          onChange={(event) => setLocation(event.target.value)}
+        ></input>
+        </form>
+      </div>
+      <div>
+        <button type="submit" onClick={fetchWeatherData}>
+          Get Weather
+        </button>
+      </div>
 
       {weather && (
         <div>
